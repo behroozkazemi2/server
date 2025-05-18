@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+</head>
+<body>
+<!-- begin modal-header-->
+<div class="modal-header pt-0">
+    <div class="caption font-red-sunglo pt-2" style="display: inline-block">
+        <i th:if="${editMode == false}" class="fa fa-plus font-red-sunglo"></i>
+        <span class="caption-subject bold uppercase">فاکتور</span>
+    </div>
+    <button type="button" class="btn btn-sm btn-secondary" data-dismiss="modal" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+<!-- end modal-header-->
+<div class="modal-body px-0 pb-0">
+    <div class="card card-success">
+        <div class="card-header">
+            <h5 class="m-0">اطلاعات مشتری</h5>
+        </div>
+        <div class="card-body">
+            <div class="row customerData">
+                <div class="col-md-6">
+                    <p><span class="bold">نام: </span> <span th:text="${billcustomer.firstName}"></span> <span
+                            th:text="${billcustomer.lastName}"></span></p>
+                </div>
+                <div class="col-md-6">
+                    <p><span class="bold">شماره تلفن: </span> <span th:text="${billcustomer.mobile}"></span></p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <p>
+                        <span class="bold">نشانی: </span>
+                        <span th:if="${billlist.address != null}" th:text="${billlist.address.address}"></span>
+                        <span th:unless="${billlist.address != null}" th:text="'-'"></span>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="card">
+        <div class="card-body">
+            <div class="row">
+                <div class="col-sm-6">
+                    کد پیگیری: <span th:text="${trackingcode}"></span>
+                </div>
+                <div class="col-sm-6">
+                    تاریخ ایجاد: <span th:text="${insertdate}"></span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="card">
+        <div class="card-body px-2 pt-0">
+            <div class="row">
+                <table class="table table-hover">
+                    <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>کالا</th>
+                        <th>واحد فروش</th>
+                        <th>مقدار</th>
+                        <th>مبلغ واحد</th>
+                        <th style="border-left: 1px solid #e0e0e0;">مبلغ کل</th>
+                        <th>تامین‌کننده</th>
+                        <th>تلفن تامین‌کننده</th>
+                        <th>تنظیمات</th>
+                        <!--<th>مبلغ تخفیف</th>-->
+                        <!--<th>مبلغ کل پس از تخفیفات</th>-->
+                        <!--<th>مالیات و عوارض</th>-->
+                        <!--<th>جمع مبلغ کل و مالیات</th>-->
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="item,iter:${bill}">
+                        <td th:text="${iter.index+1}"></td>
+                        <td th:text="${item.productName}"></td>
+                        <td th:text="${item.unitName}"></td>
+                        <td>
+                            <span th:class="'editt edit-' + ${item.billProductId}" th:text="${item.count}"></span>
+                            <input type="text" th:class="'txtedit-' + ${item.billProductId}" th:attr="data-billid=${billid},data-productid=${item.billProductId}" style="display: none;" th:value="${item.count}">
+                        </td>
+                        <td th:text="${item.productName}"></td>
+                        <td th:inline="text" th:class="'newProductPrice-' + ${item.billProductId}"> [[${#numbers.formatDecimal(item.price, 0, 'COMMA', 0, 'POINT')}]] </td>
+                        <td th:text="${item.providerName}"></td>
+                        <td th:text="${item.providerPhone}"></td>
+                        <td>
+                            <div th:class="'btn-group btns-' + ${item.billProductId}" role="group">
+                                <!-- th:href="@{'/admin/order/deletebill/' + ${billid} + '/' + details(billProductId=${item.billProductId})}" -->
+                                <!--<button th:value="@{ ${billid} + '/' + details(productId=${item.billProductId},value=${item.count})}" class="btn btn-sm btn-success fackdetedit"> <i class="fa fa-edit"></i> </button>-->
+                                <button class="btn btn-sm btn-success editt1" th:attr="data-productid=${item.billProductId}"> <i class="fa fa-edit"></i> </button>
+                                <a th:onclick="|deleteProduct('${billid}','${item.billProductId}')|" class="btn btn-sm btn-danger text-light"> <i class="fa fa-trash"></i> </a>
+                            </div>
+                            <div th:class="'btn-group btns1-' + ${item.billProductId}" style="display: none;">
+                                <button class="btn btn-sm btn-success editfield" th:attr="data-productid=${item.billProductId}"> <i class="fa fa-check"></i> </button>
+                                <button class="btn btn-sm btn-danger cancelfield" th:attr="data-productid=${item.billProductId}"> <i class="fa fa-times"></i> </button>
+                            </div>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+                <div class="text-center text-success m-auto" style="margin: 0 auto; width: 30%">
+                    <div class="bold" style="border: 1px dashed #26A69A; display: block; padding: 10px; border-radius: 40px !important;">جمع کل: <span th:inline="text" class="newPayableAmount"> [[${#numbers.formatDecimal(sumPrices, 0, 'COMMA', 0, 'POINT')}]] </span> ﷼</div>
+                </div>
+                <!--<p th:if="${invoice.description}" id="dynamic_pager_content1" class="well ">توضیحات: <span class="description" th:text="${invoice.description}">فاکتور خدمات قرارداد شماره 11/3466/و مورخه 1397/01/25</span></p>-->
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<div th:remove="tag" th:fragment="scripts">
+
+    <script type="text/javascript">
+        $(document).ready(function(){
+
+            // Add Class
+              $(document).on('click', '.editt1', function(){
+                let id = $(this).data('productid');
+                $(".edit-" + id).hide();
+                $(".btns-" + id).hide();
+                $(".btns1-" + id).show();
+                $('.txtedit-' + id).show().focus();
+            });
+
+            // Save data
+            $(document).on("click", ".editfield", function(){
+                //Get edit id, field name and value
+                var id = $(this).data('productid');
+                var billid = $('.txtedit-'+id).data('billid');
+                var productid = $('.txtedit-'+id).data('productid');
+                var amount = $('.txtedit-'+id).val();
+
+                // console.log(id + '  ' + billid + '  ' + productid + '  ' + amount);
+
+                // Hide Input element
+                $(".btns1-" + id).hide();
+                $(".btns-" + id).show();
+
+                // Hide and Change Text of the container with input elmeent
+                $('.edit-'+id).show();
+                $('.edit-'+id).text(amount);
+
+                $('.txtedit-'+id).hide();
+
+                // Sending AJAX request
+                $.ajax({
+                    url: '/admin/order/ceditbill',
+                    type: 'POST',
+                    data: {
+                        billid: billid,
+                        productid: productid,
+                        amount: amount
+                    },
+                    success:function(response){
+                        $('.txtedit-'+id).val(amount);
+                        $('.newProductPrice-'+id).text(response.newProductPrice.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","));
+                        $('.newPayableAmount').text(response.newPayableAmount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","));
+                        Swal({
+                            title: 'ویرایش شد',
+                            type: 'success',
+                            toast: true,
+                            position: 'bottom',
+                            showCancelButton: false,
+                            confirmButtonColor: '#3085d6',
+                            confirmButtonText: 'باشه',
+                            timer: 1000
+                        });
+                    },
+                    error:function () {
+                        Swal({
+                            title: 'مشکل',
+                            type: 'error',
+                            toast: true,
+                            position: 'bottom',
+                            showCancelButton: false,
+                            confirmButtonColor: '#3085d6',
+                            confirmButtonText: 'باشه',
+                            timer: 1000
+                        });
+                    }
+                });
+            });
+
+            // Cancel data
+            $(document).on("click", ".cancelfield", function(){
+
+                //Get edit id, field name and value
+                var id = $(this).data('productid');
+                var amount = $('.txtedit-'+id).val();
+
+                // Hide Input element
+                $(".btns1-" + id).hide();
+                $(".btns-" + id).show();
+
+                // Hide and Change Text of the container with input elmeent
+                $('.edit-'+id).show();
+                $('.edit-'+id).text(amount);
+
+                $('.txtedit-'+id).hide();
+            });
+
+        });
+    </script>
+
+</div>
+
+
+
+</body>
+</html>

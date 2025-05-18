@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <div th:remove="tag" th:fragment="headers">
+    </div>
+</head>
+
+<body>
+
+<div th:fragment="content">
+    <div class="wrapper">
+        <!-- Content Wrapper. Contains page content -->
+        <div class="content-wrapper">
+            <!-- Content Header (Page header) -->
+            <div class="content-header">
+                <div class="container-fluid">
+                    <div class="row mb-2">
+                        <div class="col-sm-6">
+                            <div th:if="!editMode">
+                                <h1 class="m-0 text-dark"> تامین‌کننده جدید </h1>
+                            </div>
+                            <div th:if="editMode">
+                                <h1 class="m-0 text-dark"> ویرایش  <span class="m-0 text-dark" th:text="${providerId.name}">  </span> </h1>
+                            </div>
+                        </div><!-- /.col -->
+                        <div class="col-sm-6">
+                            <ol class="breadcrumb float-sm-left">
+                                <li class="breadcrumb-item"><a href="#"> تامین کننده </a></li>
+                                <li class="breadcrumb-item active"> جدید </li>
+                            </ol>
+                        </div><!-- /.col -->
+                    </div><!-- /.row -->
+                </div><!-- /.container-fluid -->
+            </div>
+            <!-- /.content-header -->
+
+            <!-- Main content -->
+            <section class="content">
+                <div class="container-fluid">
+                    <!-- Main row -->
+                    <div class="row">
+                        <!-- Main col -->
+                        <section class="col-lg-12 connectedSortable">
+
+                            <!--/*@thymesVar id="providerId" type="com.behrouz.server.oldRest.request.ProviderRequest"*/-->
+                            <form id="newProvider" th:object="${providerId}" class="form-horizontal form-row-seperated">
+                                <!-- Custom tabs (Charts with tabs)-->
+                                <div class="card">
+                                    <div class="card-header d-flex p-2">
+                                        <ul class="nav nav-pills mr-2 p-2" id="gridTabs">
+                                            <li class="nav-item">
+                                                <a class="nav-link active" href="#tab_1" data-toggle="tab" data-id="1"> اطلاعات کلی </a>
+                                            </li>
+                                            <li class="nav-item">
+                                                <a class="nav-link" href="#tab_2" data-toggle="tab" data-id="2"> تصاویر </a>
+                                            </li>
+                                        </ul>
+                                        <div class="btn-group mr-auto mt-2 ml-2">
+                                            <a href="/admin/providerId/" name="back" class="btn btn-sm btn-secondary" style="padding-top: 10px;"><i class="fa fa-angle-left"></i> بازگشت</a>
+                                            <button type="submit" class="btn btn-sm btn-success"><i class="fa fa-check"></i> ذخیره</button>
+                                        </div>
+                                    </div><!-- /.card-header -->
+                                    <div class="card-body">
+                                        <div class="tab-content p-0">
+                                            <!-- Morris chart - Sales -->
+                                            <div class="chart tab-pane active paddtable" id="tab_1">
+                                                <div class="form-body">
+                                                    <div class="form-group row">
+                                                        <label class="col-md-2 control-label">نام: <span class="required">
+                                                    * </span>
+                                                        </label>
+                                                        <div class="col-md-10">
+                                                            <!--<input type="hidden" name="id" th:value="*{id}">-->
+                                                            <input th:field="*{name}" type="text" class="form-control checkNumber" placeholder="">
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group row">
+                                                        <label class="col-md-2 control-label">توضیحات کوتاه: <span class="required">
+                                                    * </span></label>
+                                                        <div class="col-md-10">
+                                                            <textarea th:field="*{shortDescription}" class="form-control checkNumber"></textarea>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group row">
+                                                        <label class="col-md-2 control-label">توضیحات کامل:</label>
+                                                        <div class="col-md-10">
+                                                            <textarea th:field="*{fullDescription}" class="form-control checkNumber"></textarea>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group row">
+                                                        <label class="col-md-2 control-label">دسته بندی: <span class="required">
+                                                    * </span>
+                                                        </label>
+                                                        <div class="col-md-10">
+                                                            <select th:field="*{categories}" class="form-control has-select2 cityItems" multiple="multiple" style="width:100%">
+                                                                <option th:each="dropDownCityItem : ${@providerCategories.getList()}"
+                                                                        th:value="${dropDownCityItem.id}"
+                                                                        th:text="${dropDownCityItem.text}">
+                                                                </option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group row">
+                                                        <label class="col-md-2 control-label">وضعیت: <span class="required">
+                                                    * </span>
+                                                        </label>
+                                                        <div class="col-md-10">
+                                                            <select class="table-group-action-input form-control input-medium has-select2" name="status">
+                                                                <option value="1">فعال</option>
+                                                                <option value="2">معلق</option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group row">
+                                                        <label class="col-md-2 control-label">آدرس: <span class="required">
+                                                    * </span>
+                                                        </label>
+                                                        <div class="col-md-10">
+                                                            <input type="hidden" name="id" th:value="*{id}">
+                                                            <input th:field="*{address}" type="text" class="form-control checkNumber" placeholder="">
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group row">
+                                                        <label class="col-md-2 control-label">تلفن: <span class="required">
+                                                * </span>
+                                                        </label>
+                                                        <div class="col-md-10">
+                                                            <input th:field="*{phone[0]}" type="text" class="form-control checkNumber" placeholder="">
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+
+                                                        <!--<div class="form-group col-md-6">-->
+                                                        <!--<label class="col-md-3 control-label">تلفن 2: <span class="required">-->
+                                                        <!--* </span>-->
+                                                        <!--</label>-->
+                                                        <!--<div class="col-md-9">-->
+                                                        <!--<input th:field="*{phone[1]}" type="text" class="form-control checkNumber" placeholder="">-->
+                                                        <!--</div>-->
+                                                        <!--</div>-->
+                                                    </div>
+
+                                                    <div class="font-weight-bold" th:if="*{logoImage}!=null">
+                                                        پیش نمایش: <br>
+                                                        <img class="file-preview-image border border-danger" th:src="'data:image/jpeg;base64,' + *{base64Convert(logoImage)}" style="width: 20%; border-radius: 5%;">
+                                                    </div>
+                                                    <br>
+                                                    <div class="file-group row justify-content-center">
+                                                        <input id="input-id" type="file" name="logo" accept="image/*" data-preview-file-type="text">
+                                                    </div>
+
+
+                                                </div>
+                                            </div>
+                                            <div class="chart tab-pane paddtable" id="tab_2">
+                                                <div id="tab_images_uploader_container" class="text-align-reverse margin-bottom-10">
+
+                                                    <a onclick="addImageRow()" class="btn green">
+                                                        <i class="fa fa-plus"></i> افزودن تصویر </a>
+
+                                                </div>
+                                                <table class="table table-bordered table-hover">
+                                                    <thead>
+                                                    <tr role="row" class="heading">
+                                                        <th width="8%">تصویر</th>
+                                                        <th width="8%">ترتیب نمایش</th>
+                                                        <th width="10%"></th>
+                                                    </tr>
+                                                    </thead>
+                                                    <tbody id="providerImages">
+                                                    <tr th:if="*{images == null || images.size() == 0}" class="text-center imageNotExist">
+                                                        <td colspan="3">تصویری ثبت نشده است</td>
+                                                    </tr>
+                                                    <tr th:if="*{images != null && images.size() != 0}" th:each="imageItem, iter : *{images}">
+                                                        <td style="width: 90px;">
+                                                            <a class="fancybox-button" data-rel="fancybox-button">
+                                                                <img class="img-fluid img-thumbnail img-bordered w-100" style="height: 200px;" th:src="${'data:image/jpeg;base64,' + providerId.base64Convert(imageItem.image)}" alt="">
+                                                            </a>
+                                                        </td>
+                                                        <td>
+                                                            <input type="hidden" th:value="${imageItem.id}" th:name="'images[' + ${iter.index} + '].id'">
+                                                            <input type="text" class="form-control" th:value="${imageItem.imageOrder}" th:name="'images[' + ${iter.index} + '].sortOrder'">
+                                                        </td>
+                                                        <td>
+                                                            <input th:id="'images-'+ ${iter.index}" type="file"/>
+                                                            <!--<a href="javascript:;" class="btn default btn-sm">-->
+                                                            <!--<i class="fa fa-times"></i> Remove </a>-->
+                                                        </td>
+                                                    </tr>
+
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div><!-- /.card-body -->
+                                </div>
+                                <!-- /.card -->
+                            </form>
+
+
+                        </section>
+                        <!-- /.Main col -->
+                    </div>
+                    <!-- /.row (main row) -->
+                </div><!-- /.container-fluid -->
+            </section>
+            <!-- /.content -->
+        </div>
+
+        <!-- Control Sidebar -->
+        <aside class="control-sidebar control-sidebar-dark">
+            <!-- Control sidebar content goes here -->
+        </aside>
+        <!-- /.control-sidebar -->
+    </div>
+    <!-- ./wrapper -->
+
+</div>
+
+
+
+<div th:remove="tag" th:fragment="scripts">
+
+    <script th:src="@{/assets/js/pages/providerId/providerNew.js}" type="text/javascript" ></script>
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+
+            providerNew.init();
+            $('#gridTabs a[href="#tab_1"]').trigger('click');
+
+            $("#input-id").fileinput({
+                showRemove: false,
+                showUpload: false,
+                showCancel: false,
+                browseLabel: 'انتخاب',
+                layoutTemplates: {footer: ''}
+            });
+
+        });
+    </script>
+
+</div>
+
+</body>
+</html>

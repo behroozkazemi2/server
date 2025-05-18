@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+
+</head>
+<body>
+<!-- begin modal-header-->
+<div class="modal-header">
+    <div class="caption">
+        <i th:if="${editMode == false}" class="fa fa-plus font-red-sunglo"></i>
+        <span class="caption-subject bold uppercase">پشتیبانی</span>
+    </div>
+    <button type="button" class="btn btn-sm btn-secondary" data-dismiss="modal" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+<!-- end modal-header-->
+<div class="modal-body">
+    <div class="card card-info card-outline">
+        <div class="card-header">
+            <h5 class="m-0"> اطلاعات فرد </h5>
+        </div>
+        <div class="card-body">
+            <div class="row customerData">
+                <div class="col-md-6">
+                    <p><span class="bold">نام: </span> <span th:text="${support.customer.firstName}"></span> <span
+                            th:text="${support.customer.lastName}"></span></p>
+                </div>
+                <div class="col-md-6">
+                    <p><span class="bold">شماره تلفن: </span> <span th:text="${support.customer.mobile}"></span></p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="card card-warning card-outline">
+        <div class="card-header">
+            <h5 class="font-weight-bold" th:text="${support.subject}" style="float: right;"></h5>
+            <span class="font-weight-light" th:text="${support.trackingCode}" style="float: left;"></span>
+        </div>
+        <div class="card-body" th:text="${support.description}">
+
+        </div>
+        <div class="card-footer">
+            <span th:text="${date}" style="float: left"></span>
+            <div style="clear:both"></div>
+        </div>
+    </div>
+</div>
+
+<div th:remove="tag" th:fragment="scripts">
+    <script>
+
+    </script>
+</div>
+
+</body>
+</html>

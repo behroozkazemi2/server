@@ -1,0 +1,27 @@
+bank:
+  saman:
+    pay-url: "https://sep.shaparak.ir/OnlinePG/SendToken?token="
+    call-back-url: "https://shop.behrouz.com/payment/saman/verifyBankTransaction/"
+    user-pay-url: "https://shop.behrouz.com/payment/melli/"
+    merchant-id: "341590332"
+    terminal-id: "14306774"
+    epg-key: ""
+
+
+#  sadad:
+#
+#    sadad-pay-url: "https://sadad.shaparak.ir/VPG/Purchase?token="
+#    call-back-url: "https://api.shop.behrouz.com/payment/melli/sadadpsp/"
+#    user-pay-url: "https://shop.behrouz.com/payment/melli/"
+#
+#    merchant-id: "00343400001123440343443123123217250"
+#    terminal-id: "2409211126263"
+#    epg-key: "2212121244X1212112212z62rcxree5vuJDavxfgD5j9G9KAF7Nab8qjLIY"
+
+
+
+
+# Test Detail
+#    merchant-id: "033312314444221234021332149"
+#    terminal-id: "22255522022222444263333"
+#    epg-key: "kAALSAZheA333AAASS+FS7saeSfMLoL2WWs2xaqW22lLSSSVESSE3v133122/W1FPDDD07uLaRww"

@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <div th:remove="tag" th:fragment="headers">
+    </div>
+</head>
+
+<body>
+
+<div th:fragment="content">
+    <div class="wrapper">
+        <!-- Content Wrapper. Contains page content -->
+        <div class="content-wrapper">
+            <!-- Content Header (Page header) -->
+            <div class="content-header">
+                <div class="container-fluid">
+                    <div class="row mb-2">
+                        <div class="col-sm-6">
+                            <span class="caption-subject font-green-sharp bold uppercase" th:text="${editMode == true ? 'ویرایش محصول' : 'محصول جدید'}"></span>
+                            <span class="caption-subject font-green-sharp bold uppercase" th:text="${providerId.name}"></span>
+                        </div><!-- /.col -->
+                        <div class="col-sm-6">
+                            <ol class="breadcrumb float-sm-left">
+                                <li class="breadcrumb-item"><a href="#"> تامین کننده </a></li>
+                                <li class="breadcrumb-item"><a href="#"> محصولات تامین کننده </a></li>
+                                <li class="breadcrumb-item active"> جدید </li>
+                            </ol>
+                        </div><!-- /.col -->
+                    </div><!-- /.row -->
+                </div><!-- /.container-fluid -->
+            </div>
+            <!-- /.content-header -->
+
+            <!-- Main content -->
+            <section class="content">
+                <div class="container-fluid">
+                    <!-- Main row -->
+                    <div class="row">
+                        <!-- Main col -->
+                        <section class="col-lg-12 connectedSortable">
+
+                            <!--/*@thymesVar id="productProvider" type="com.behrouz.server.oldRest.request.ProductProviderRequest"*/-->
+                            <form th:object="${productProvider}" id="newProductProvider" class="form-horizontal form-row-seperated">
+                                <!-- Custom tabs (Charts with tabs)-->
+                                <div class="card">
+                                    <div class="card-header d-flex p-2">
+                                        <ul class="nav nav-pills mr-2 p-2" id="gridTabs">
+                                            <li class="nav-item">
+                                                <a class="nav-link active" href="#tab_1" data-toggle="tab" data-id="1"> اطلاعات کلی </a>
+                                            </li>
+                                            <li class="nav-item">
+                                                <a class="nav-link" href="#tab_2" data-toggle="tab" data-id="2"> تصاویر </a>
+                                            </li>
+                                        </ul>
+                                        <div class="btn-group mr-auto mt-2 ml-2">
+                                            <a th:href="@{'/admin/providerId/products/' + ${providerId.id}}" type="button" name="back" class="btn btn-secondary" style="padding-top: 10px;"><i class="fa fa-angle-left"></i> بازگشت</a>
+                                            <button type="submit" class="btn btn-success"><i class="fa fa-check"></i> ذخیره</button>
+                                        </div>
+                                    </div><!-- /.card-header -->
+                                    <div class="card-body">
+                                        <div class="tab-content p-0">
+                                            <!-- Morris chart - Sales -->
+                                            <div class="chart tab-pane active paddtable" id="tab_1">
+                                                <div class="form-body">
+                                                    <input type="hidden" name="providerId" th:value="${providerId.id}">
+                                                    <input type="hidden" name="productProviderId" th:value="*{productProviderId}">
+                                                    <div class="form-group row">
+                                                        <label class="control-label col-md-2">نام محصول :<span class="required">
+                                                    * </span>
+                                                        </label>
+                                                        <div class="col-md-10">
+                                                            <input th:field="*{name}" type="text" class="form-control checkNumber" placeholder="نام محصول"/>
+                                                            <span id="showError" class="text-danger"></span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group row">
+                                                        <label class="control-label col-md-2">دسته بندی: <span class="required">
+                                                * </span>
+                                                        </label>
+                                                        <div class="col-md-10">
+                                                            <select th:field="*{categoryId}" class="form-control has-select2 cityItems" style="width:100%">
+                                                                <optgroup th:each="dropDownItem : ${@categories.getList()}"
+                                                                          th:label="${dropDownItem.text}">
+                                                                    <option th:each="dropDownCityItem : ${dropDownItem.children}"
+                                                                            th:value="${dropDownCityItem.id}"
+                                                                            th:text="${dropDownCityItem.text}">
+                                                                    </option>
+                                                                </optgroup>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group row">
+                                                        <label class="col-md-2 control-label">تگ:</label>
+                                                        <div class="col-md-10">
+                                                            <select th:field="*{tagIds}" class="form-control has-select2" multiple="multiple" style="width:100%">
+                                                                <option th:each="dropDownCityItem : ${@tagsId.getList()}"
+                                                                        th:value="${dropDownCityItem.id}"
+                                                                        th:text="${dropDownCityItem.text}">
+                                                                </option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group row">
+                                                        <label class="col-md-2 control-label">واحد فروش:</label>
+                                                        <div class="col-md-10">
+                                                            <select th:field="*{unitId}" class="form-control has-select2"  style="width:100%">
+                                                                <option th:each="dropDownCityItem : ${@productUnits.getList()}"
+                                                                        th:value="${dropDownCityItem.id}"
+                                                                        th:text="${dropDownCityItem.text}">
+                                                                </option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group row">
+                                                        <label class="control-label col-md-2">ترتیب نمایش :<span class="required">
+                                                    * </span>
+                                                        </label>
+                                                        <div class="col-md-10">
+                                                            <input th:field="*{order}" type="text" class="form-control checkNumber" />
+                                                            <span id="showError" class="text-danger"></span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group row">
+                                                        <label class="control-label col-md-2">حداقل سفارش :<span class="required">
+                                                    * </span>
+                                                        </label>
+                                                        <div class="col-md-10">
+                                                            <input th:field="*{minAllow}" type="text" class="form-control checkNumber" />
+                                                            <span id="showError" class="text-danger"></span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group row">
+                                                        <label class="control-label col-md-2">حداکثر سفارش :<span class="required">
+                                                    * </span>
+                                                        </label>
+                                                        <div class="col-md-10">
+                                                            <input th:field="*{maxAllow}" type="text" class="form-control checkNumber" />
+                                                            <span id="showError" class="text-danger"></span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group row">
+                                                        <label class="col-md-2 control-label">توضیحات کوتاه: <span class="required">
+                                                    * </span>
+                                                        </label>
+                                                        <div class="col-md-10">
+                                                            <textarea th:field="*{shortDescription}" class="form-control checkNumber"></textarea>
+                                                            <span class="help-block">نمایش در لیست محصولات</span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group row">
+                                                        <label class="col-md-2 control-label">توضیحات کامل:</label>
+                                                        <div class="col-md-10">
+                                                            <textarea th:field="*{fullDescription}" class="form-control"></textarea>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group row">
+                                                        <label class="col-md-2 control-label">قیمت هر واحد: <span class="required">
+                                                    * </span>
+                                                        </label>
+                                                        <div class="col-md-10">
+                                                            <input th:field="*{price}" type="text" class="form-control checkNumber" placeholder="">
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label class="col-md-2 control-label">وضعیت: <span class="required">
+                                                    * </span>
+                                                        </label>
+                                                        <div class="col-md-10">
+                                                            <div class="checkbox-list">
+                                                                <label class="checkbox-inline">
+                                                                    <input type="checkbox" th:field="*{exist}" /> موجود می‌باشد </label>
+                                                            </div>
+                                                            <!--<select class="table-group-action-input form-control input-medium has-select2" name="status">-->
+                                                            <!--<option value="1">موجود</option>-->
+                                                            <!--<option value="2">ناموجود</option>-->
+                                                            <!--</select>-->
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="chart tab-pane paddtable" id="tab_2">
+                                                <div id="tab_images_uploader_container" class="text-align-reverse margin-bottom-10">
+
+                                                    <a onclick="addImageRow()" class="btn green">
+                                                        <i class="fa fa-plus"></i> افزودن تصویر </a>
+
+                                                </div>
+                                                <table class="table table-bordered table-hover">
+                                                    <thead>
+                                                    <tr role="row" class="heading">
+                                                        <th width="8%">تصویر</th>
+                                                        <th width="8%">ترتیب نمایش</th>
+                                                        <th width="10%"></th>
+                                                    </tr>
+                                                    </thead>
+                                                    <tbody id="providerImages">
+                                                    <tr th:if="*{images == null || images.size() == 0}" class="text-center imageNotExist">
+                                                        <td colspan="3">تصویری ثبت نشده است</td>
+                                                    </tr>
+                                                    <tr th:if="*{images != null && images.size() != 0}" th:each="imageItem, iter : *{images}">
+                                                        <td>
+                                                            <a class="fancybox-button" data-rel="fancybox-button">
+                                                                <img class="img-responsive" th:src="${'data:image/jpeg;base64,' + productProvider.base64Convert(imageItem.image)}" alt="">
+                                                            </a>
+                                                        </td>
+                                                        <td>
+                                                            <input type="hidden" th:value="${imageItem.id}" th:name="'images[' + ${iter.index} + '].id'">
+                                                            <input type="text" class="form-control" th:value="${imageItem.imageOrder}" th:name="'images[' + ${iter.index} + '].sortOrder'">
+                                                        </td>
+                                                        <td>
+                                                            <input th:id="'images-'+ ${iter.index}" type="file"/>
+                                                            <!--<a href="javascript:;" class="btn default btn-sm">-->
+                                                            <!--<i class="fa fa-times"></i> Remove </a>-->
+                                                        </td>
+                                                    </tr>
+
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div><!-- /.card-body -->
+                                </div>
+                                <!-- /.card -->
+                            </form>
+
+
+                        </section>
+                        <!-- /.Main col -->
+                    </div>
+                    <!-- /.row (main row) -->
+                </div><!-- /.container-fluid -->
+            </section>
+            <!-- /.content -->
+        </div>
+
+        <!-- Control Sidebar -->
+        <aside class="control-sidebar control-sidebar-dark">
+            <!-- Control sidebar content goes here -->
+        </aside>
+        <!-- /.control-sidebar -->
+    </div>
+    <!-- ./wrapper -->
+
+</div>
+
+<div th:remove="tag" th:fragment="scripts">
+
+    <script th:src="@{/assets/js/pages/productProvider/productProviderNew.js}" type="text/javascript" ></script>
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+
+            productProviderNew.init();
+            $('#gridTabs a[href="#tab_1"]').trigger('click');
+
+        });
+    </script>
+
+</div>
+
+</body>
+</html>

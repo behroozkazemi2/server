@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+</head>
+<body>
+
+<div class="page-header navbar navbar-fixed-top" th:fragment="header">
+    <div class="page-header-inner container">
+        <div class="page-logo">
+            <a href="/admin">
+                <!--<img th:src="@{/assets/image/icon0.png}" style="margin: 10px 0 0 0;" width="50" alt="" class="logo-default"/>-->
+            </a>
+            <div class="menu-toggler sidebar-toggler">
+            </div>
+        </div>
+        <a href="javascript:;" class="menu-toggler responsive-toggler" data-toggle="collapse" data-target=".navbar-collapse">
+        </a>
+        <div class="page-top">
+            <img th:src="@{/assets/images/logo.png}" style="margin: 10px 15px 0 0;" width="50" alt="logo" class="logo-default"/>
+            <!--<img th:if="${@company.getLogo()}" th:src="'data:image/jpeg;base64,' + ${@company.getLogo()}" style="margin: 10px 15px 0 0; min-width: 50px" height="45"  alt="logo" class="logo-default"/>-->
+
+            <div class="top-menu">
+                <ul class="nav navbar-nav pull-right">
+                    <li class="dropdown dropdown-extended quick-sidebar-toggler">
+                        <form th:action="@{/admin/account/logout}" method="post" class="pull-left">
+                            <a href="/admin/account/logout"><i class="icon-logout"></i></a>
+                        </form>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

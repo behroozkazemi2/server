@@ -1,0 +1,11 @@
+message:
+  api:
+    client:
+      fa:
+        default-success: 'با موفقیت انجام شد'
+        default-failed: 'در مرکز ایرادی رخ داد'
+        api-not-allowed: 'عدم اجازه، مجددا وارد شوید.'
+        api-not-found: 'داده ای در مرکز پیدا نشد.'
+        login-mobile-not-found: 'لطفا ابتدا ثبت نام کنید.'
+
+

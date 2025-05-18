@@ -1,0 +1,5 @@
+api-debug:
+  mode: true
+  delay-response: false
+  log-byte-length: 4096
+  sms-code: "12345"

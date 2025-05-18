@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <div th:remove="tag" th:fragment="style">
+
+        <link th:href="@{/assets/lib/select2/dist/css/select2.css}" rel="stylesheet" type="text/css"/>
+
+        <style>
+            .form-group .select2-container {
+                position: relative;
+                z-index: 2;
+                float: left;
+                width: 100% !important;
+                margin-bottom: 0;
+                display: table;
+                table-layout: fixed;
+            }
+        </style>
+    </div>
+</head>
+<body>
+<!-- begin modal-header-->
+<div class="modal-header" >
+    <div class="caption font-red-sunglo">
+        <i class="fa fa-plus font-red-sunglo"></i>
+        <span class="caption-subject bold uppercase" th:text="${editMode == true ? 'ویرایش' : 'جدید'}"></span>
+    </div>
+</div>
+<!-- end modal-header-->
+<!-- start modal-body-->
+<!-- sec:authorize="isAdmin()" -->
+<div class="modal-body"  id="form_wizard_1">
+
+    <form role="form" th:object="${unit}" id="add_category_submit_form" method="post">
+        <!-- begin form-wizard-->
+        <div class="form-wizard">
+            <div class="form-body">
+                <div class="form-body">
+                    <div class="row">
+                        <div class="form-group col-md-6">
+                            <label class="control-label required">عنوان:
+                                <span class="required" aria-required="true">* </span>
+                            </label>
+                            <input th:field="*{id}" type="hidden"/>
+                            <input th:field="*{name}" name="title" class="form-control checkNumber" type="text"/>
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label class="control-label required">گام حرکت:
+                                <span class="required" aria-required="true">* </span>
+                            </label>
+                            <input th:field="*{ratio}" name="title" class="form-control checkNumber" type="text"/>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-group col-md-6">
+                            <label class="control-label required">میزان خطا:
+                                <span class="required" aria-required="true">* </span>
+                            </label>
+                            <input th:field="*{tolerance}" name="title" class="form-control checkNumber" type="text"/>
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label class="control-label required">تقسیم پذیر
+                                <span class="required" aria-required="true">* </span>
+                            </label>
+                            <div class="checkbox-list padding-right-20">
+                                <label>
+                                    <input th:field="*{dividable}" type="checkbox"> می‌باشد </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- end form-wizard-->
+        <!-- begin modal footer-->
+        <div class="row w-100 btn-group justify-content-center">
+            <button type="button" class="btn btn-sm btn-secondary" data-dismiss="modal">بازگشت</button>
+            <button type="submit" class="btn btn-sm btn-success" th:text="${editMode == true ? 'ویرایش' : 'ذخیره'}"></button>
+        </div>
+        <!-- end modal footer-->
+    </form>
+    <!-- end form-->
+</div>
+<!-- end modal-body-->
+<div th:remove="tag" th:fragment="scripts">
+
+    <script type="text/javascript" th:src="@{/assets/js/pages/product/newUnit.js}"></script>
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            newUnit.init();
+        });
+    </script>
+
+</div>
+
+</body>
+</html>

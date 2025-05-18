@@ -1,0 +1,7 @@
+android:
+  version:
+    name: 1.0.0
+    code: 1
+  force-update: true
+  link: "https://shop.behrouz.com/assets/apk/8tagmarket_v1.apk"
+

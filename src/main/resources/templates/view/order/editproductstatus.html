@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+</head>
+<body>
+<!-- begin modal-header-->
+<div class="modal-header">
+    <div class="caption font-red-sunglo" style="display: inline-block">
+        <i th:if="${editMode == false}" class="fa fa-plus font-red-sunglo"></i>
+        <span class="caption-subject bold uppercase">تغییر وضعیت فاکتور</span>
+    </div>
+    <button type="button" class="btn btn-sm btn-secondary" data-dismiss="modal" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+<!-- end modal-header-->
+<div class="modal-body">
+    <form action="/admin/order/cbillstatus" class="form-horizontal" method="POST">
+        <input type="hidden" name="billId" th:value="${billId}">
+        <div class="row">
+            <div class="form-group text-center" style="margin: 20px auto;">
+                <label class="radio-inline">
+                    <input type="radio" name="status" id="inlineRadio1" value="1"> ثبت شد
+                </label>
+                <label class="radio-inline">
+                    <input type="radio" name="status" id="inlineRadio2" value="2">  درحال آماده سازی
+                </label>
+                <label class="radio-inline">
+                    <input type="radio" name="status" id="inlineRadio3" value="3">  ارسال شد
+                </label>
+                <label class="radio-inline">
+                    <input type="radio" name="status" id="inlineRadio4" value="4">  تحویل داده شد
+                </label>
+                <label class="radio-inline">
+                    <input type="radio" name="status" id="inlineRadio5" value="5"> لغو شد
+                </label>
+            </div>
+        </div>
+        <div class="row justify-content-center">
+            <button type="submit" class="btn btn-primary"> ویرایش </button>
+        </div>
+    </form>
+</div>
+
+<div th:remove="tag" th:fragment="scripts">
+    <script>
+
+    </script>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,9 @@
+uploader:
+  save-path: /opt/java/upload/ticket
+#  save-path: C:\Users\Public
+
+spring:
+  servlet:
+    multipart:
+      max-file-size: 4MB
+      max-request-size: 4MB

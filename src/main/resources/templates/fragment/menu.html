@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head></head>
+
+<body>
+
+
+<div class="page-sidebar-wrapper" th:fragment="menu">
+    <div class="page-sidebar navbar-collapse collapse">
+        <ul class="page-sidebar-menu page-sidebar-menu-hover-submenu " data-keep-expanded="false" data-auto-scroll="true" data-slide-speed="200">
+            <!--<li th:each="menuItem : ${@menuService.getMenu()}" th:class="${menuItem.isActive()}?'start active':'start'">-->
+                <!--<a th:href="${menuItem.getAction().isEmpty() ?'javascript:;' : menuItem.getAction()}">-->
+                    <!--<i th:class="${menuItem.getIcon()}"></i>-->
+                    <!--<span th:text="${menuItem.getTitle()}" class="title">eCommerce</span>-->
+                    <!--<span th:if="${menuItem.getChildren() != null}" class="arrow "></span>-->
+                <!--</a>-->
+                <!--<ul th:if="${menuItem.getChildren() != null}" class="sub-menu">-->
+                    <!--<li th:each="subMenuItem : ${menuItem.getChildren()}" th:class="${subMenuItem.isActive()}?'active':''">-->
+                        <!--<a th:href="@{${subMenuItem.getAction()}}" th:text="${subMenuItem.getTitle()}">-->
+                            <!--<i class="icon-home"></i></a>-->
+                    <!--</li>-->
+                <!--</ul>-->
+            <!--</li>-->
+
+            <li class="start ">
+                <a href="/admin">
+                    <i class="icon-home"></i>
+                    <span class="title">صفحه اصلی</span>
+                </a>
+            </li>
+            <li>
+                <a href="/admin/providerId">
+                    <i class="fa fa-building"></i>
+                    <span class="title">تامین کنندگان</span>
+                </a>
+            </li>
+            <li>
+                <a href="/admin/order">
+                    <i class="fa fa-shopping-cart"></i>
+                    <span class="title">سفارشات</span>
+                </a>
+            </li>
+            <!--<li>-->
+                <!--<a href="/admin/product">-->
+                    <!--<i class="fa fa-cubes"></i>-->
+                    <!--<span class="title">محصولات</span>-->
+                <!--</a>-->
+            <!--</li>-->
+            <li>
+                <a href="/admin/customer">
+                    <i class="fa fa-users"></i>
+                    <span class="title">مشتریان</span>
+                </a>
+            </li>
+            <li>
+                <a href="/admin/support">
+                    <i class="fa fa-life-ring"></i>
+                    <span class="title">پشتیبانی</span>
+                </a>
+            </li>
+
+        </ul>
+    </div>
+</div>
+
+
+<div th:remove="tag" th:fragment="scripts">
+
+
+</div>
+
+
+</body>
+
+</html>
